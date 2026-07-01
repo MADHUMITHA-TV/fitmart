@@ -1,0 +1,36 @@
+.navbar {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.logo {
+  color: white;
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.search-box {
+  width: 350px;
+  border-radius: 8px;
+}
+
+.desktop-links button {
+  text-transform: none;
+  font-weight: 500;
+}
+
+@media (max-width: 900px) {
+  .search-box {
+    display: none;
+  }
+
+  .desktop-links {
+    display: none !important;
+  }
+}

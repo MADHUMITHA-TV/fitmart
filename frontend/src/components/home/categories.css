@@ -1,0 +1,17 @@
+.category-card {
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 16px !important;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.category-card:hover {
+  box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+}
+
+.category-icon {
+  color: #1976d2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
