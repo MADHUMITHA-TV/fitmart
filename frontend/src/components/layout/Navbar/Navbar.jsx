@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
+import { fetchCart } from "../../../redux/slices/cartSlice";
 import { logout } from "../../../redux/slices/authSlice";
 
 import {
@@ -21,7 +22,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-
+import { fetchWishlist } from "../../../redux/slices/wishlistSlice";
 import { motion } from "framer-motion";
 
 import "./navbar.css";
@@ -33,10 +34,22 @@ function Navbar() {
   const dispatch = useDispatch();
 
   const { isAuthenticated } = useSelector((state) => state.auth);
+  
+  useEffect(() => {
 
-  // Temporary badges
-  const cartCount = 0;
-  const wishlistCount = 0;
+    if(isAuthenticated){
+
+        dispatch(fetchCart());
+        dispatch(fetchWishlist());
+
+    }
+
+},[dispatch,isAuthenticated]);
+const { cart } = useSelector((state) => state.cart);
+const cartCount = cart?.totalItems || 0;
+const { wishlist } = useSelector((state) => state.wishlist);
+
+const wishlistCount = wishlist?.items?.length || 0;
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [drawerOpen, setDrawerOpen] = useState(false);

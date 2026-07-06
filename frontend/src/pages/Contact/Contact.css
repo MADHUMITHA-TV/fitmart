@@ -1,0 +1,59 @@
+.contact-page{
+background:#f5f7fb;
+}
+
+.contact-hero{
+padding:130px 0;
+background:linear-gradient(135deg,#1565c0,#42a5f5);
+color:white;
+text-align:center;
+}
+
+.hero-title{
+font-weight:700;
+}
+
+.hero-subtitle{
+margin-top:20px;
+}
+
+.contact-card{
+text-align:center;
+padding:30px;
+border-radius:18px;
+transition:.3s;
+height:100%;
+}
+
+.contact-card:hover{
+transform:translateY(-8px);
+box-shadow:0 15px 35px rgba(0,0,0,.12);
+}
+
+.support-box{
+padding:40px;
+background:white;
+border-radius:18px;
+box-shadow:0 10px 30px rgba(0,0,0,.08);
+text-align:center;
+}
+
+.map-section{
+margin-top:20px;
+}
+
+.faq-section{
+padding:90px 0;
+background:white;
+}
+
+.faq-card{
+border-radius:18px;
+transition:.3s;
+height:100%;
+}
+
+.faq-card:hover{
+transform:translateY(-6px);
+box-shadow:0 12px 30px rgba(0,0,0,.12);
+}

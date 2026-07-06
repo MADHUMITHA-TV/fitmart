@@ -18,6 +18,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -60,7 +61,15 @@ public class User {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @Column(nullable = false)
+@Builder.Default
+private Integer totalOrders = 0;
+
+@Column(nullable = false, precision = 10, scale = 2)
+@Builder.Default
+private BigDecimal totalSpent = BigDecimal.ZERO;
+    @
+    ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),

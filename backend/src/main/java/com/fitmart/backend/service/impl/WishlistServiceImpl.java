@@ -73,21 +73,25 @@ public class WishlistServiceImpl implements WishlistService {
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public WishlistResponse getWishlist(
-            String email) {
+public WishlistResponse getWishlist(String email) {
 
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("User not found"));
+    User user = userRepository.findByEmail(email)
+            .orElseThrow(() ->
+                    new ResourceNotFoundException("User not found"));
 
-        Wishlist wishlist = wishlistRepository.findByUser(user)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Wishlist not found"));
+    Wishlist wishlist = wishlistRepository.findByUser(user)
+            .orElseGet(() -> {
 
-        return WishlistMapper.toResponse(wishlist);
-    }
+                Wishlist newWishlist = Wishlist.builder()
+                        .user(user)
+                        .items(new ArrayList<>())
+                        .build();
 
+                return wishlistRepository.save(newWishlist);
+            });
+
+    return WishlistMapper.toResponse(wishlist);
+}
     @Override
     public void removeProduct(
             String email,
@@ -98,8 +102,15 @@ public class WishlistServiceImpl implements WishlistService {
                         new ResourceNotFoundException("User not found"));
 
         Wishlist wishlist = wishlistRepository.findByUser(user)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Wishlist not found"));
+        .orElseGet(() -> {
+
+            Wishlist newWishlist = Wishlist.builder()
+                    .user(user)
+                    .items(new ArrayList<>())
+                    .build();
+
+            return wishlistRepository.save(newWishlist);
+        });
 
         Product product = productRepository.findById(productId)
                 .orElseThrow(() ->

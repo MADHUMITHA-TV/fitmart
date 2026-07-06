@@ -1,5 +1,3 @@
-function Home() {
-  return <h1>Products Page</h1>;
-}
+import ProductDetails from "./ProductDetails";
 
-export default Home;
+export default ProductDetails;

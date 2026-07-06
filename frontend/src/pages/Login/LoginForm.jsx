@@ -14,13 +14,13 @@ import { login } from "../../redux/slices/authSlice";
 import toast from "react-hot-toast";
 import { useEffect } from "react";
 import useAuth from "../../hooks/useAuth";
-
+import { useSelector } from "react-redux";
 function LoginForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { loading, error, isAuthenticated } = useAuth();
-
+  const user = useSelector((state) => state.auth.user);
   const {
     register,
     handleSubmit,
@@ -30,24 +30,49 @@ function LoginForm() {
   });
 
   const onSubmit = async (data) => {
-    const result = await dispatch(login(data));
 
-    if (login.fulfilled.match(result)) {
-      toast.success("Login Successful");
+  const result = await dispatch(login(data));
+
+  if (login.fulfilled.match(result)) {
+
+    toast.success("Login Successful");
+
+    const user = result.payload.user;
+
+    if (user.roles.includes("ROLE_ADMIN")) {
+
+      navigate("/admin");
+
+    } else {
+
+      navigate("/");
+
     }
-  };
+
+  }
+
+};
 
   useEffect(() => {
     if (error) {
       toast.error(error);
     }
   }, [error]);
+useEffect(() => {
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/");
-    }
-  }, [isAuthenticated, navigate]);
+  if (!isAuthenticated || !user) return;
+
+  if (user.roles?.includes("ROLE_ADMIN")) {
+
+    navigate("/admin");
+
+  } else {
+
+    navigate("/");
+
+  }
+
+}, [isAuthenticated, user, navigate]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

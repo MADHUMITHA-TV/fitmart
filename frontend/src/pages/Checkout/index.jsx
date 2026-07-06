@@ -1,5 +1,3 @@
-function Home() {
-  return <h1>Checkout Page</h1>;
-}
+import Checkout from "./Checkout";
 
-export default Home;
+export default Checkout;

@@ -15,12 +15,61 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 import { useNavigate } from "react-router-dom";
+import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
+import { useDispatch, useSelector } from "react-redux";
+
+import {
+    addToWishlist,
+    removeFromWishlist,
+} from "../../redux/slices/wishlistSlice";
+
+import toast from "react-hot-toast";
 import "./productCard.css";
 
 function ProductCard({ product }) {
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+const { wishlist } = useSelector(
+    (state) => state.wishlist
+);
+const isWishlisted =
+    wishlist?.items?.some(
+        (item) => item.productId === product.id
+    ) || false;
+
+const handleWishlist = async () => {
+
+    try {
+
+        if (isWishlisted) {
+
+            await dispatch(
+                removeFromWishlist(product.id)
+            ).unwrap();
+
+            toast.success("Removed from Wishlist");
+
+        } else {
+
+            await dispatch(
+                addToWishlist(product.id)
+            ).unwrap();
+
+            toast.success("Added to Wishlist");
+
+        }
+
+    } catch (err) {
+
+        toast.error(err);
+
+    }
+
+};
 
   return (
 
@@ -89,9 +138,20 @@ textDecoration:"line-through"
 
 <CardActions>
 
-<IconButton>
+<IconButton
+    color="error"
+    onClick={handleWishlist}
+>
 
-<FavoriteBorderIcon/>
+    {isWishlisted ? (
+
+        <FavoriteIcon />
+
+    ) : (
+
+        <FavoriteBorderIcon />
+
+    )}
 
 </IconButton>
 

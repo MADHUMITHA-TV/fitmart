@@ -1,5 +1,3 @@
-function Home() {
-  return <h1>About Page</h1>;
-}
+import About from "./About";
 
-export default Home;
+export default About;

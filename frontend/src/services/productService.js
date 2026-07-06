@@ -1,37 +1,53 @@
 import api from "./api";
 
 const productService = {
+
   getAll: async () => {
-    const response = await api.get("/products");
-    return response.data.data;
+    const { data } = await api.get("/products");
+    console.log("API Response:", data);
+
+    return data.data;
   },
 
   getById: async (id) => {
-    const response = await api.get(`/products/${id}`);
-    return response.data.data;
+    const { data } = await api.get(`/products/${id}`);
+    return data.data;
   },
 
   search: async (keyword) => {
-    const response = await api.get("/products/search", {
+    const { data } = await api.get("/products/search", {
       params: { keyword },
     });
-    return response.data.data;
+
+    return data.data;
   },
 
   getByCategory: async (categoryId) => {
-    const response = await api.get(`/products/category/${categoryId}`);
-    return response.data.data;
+    const { data } = await api.get(
+      `/products/category/${categoryId}`
+    );
+
+    return data.data;
   },
 
   getByPrice: async (min, max) => {
-    const response = await api.get("/products/price", {
-      params: { min, max },
+    const { data } = await api.get("/products/price", {
+      params: {
+        min,
+        max,
+      },
     });
-    return response.data.data;
+
+    return data.data;
   },
 
-  getPage: async (page, size, sortBy, direction) => {
-    const response = await api.get("/products/page", {
+  getPage: async (
+    page = 0,
+    size = 12,
+    sortBy = "id",
+    direction = "asc"
+  ) => {
+    const { data } = await api.get("/products/page", {
       params: {
         page,
         size,
@@ -40,7 +56,7 @@ const productService = {
       },
     });
 
-    return response.data.data;
+    return data.data;
   },
 };
 

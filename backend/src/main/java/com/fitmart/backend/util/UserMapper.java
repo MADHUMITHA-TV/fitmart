@@ -10,15 +10,30 @@ public final class UserMapper {
     }
 
     public static UserResponse toResponse(User user) {
-        return UserResponse.builder()
-                .id(user.getId())
-                .email(user.getEmail())
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
-                .phone(user.getPhone())
-                .roles(user.getRoles().stream()
-                        .map(role -> role.getName())
-                        .collect(Collectors.toSet()))
-                .build();
-    }
+
+    return UserResponse.builder()
+
+            .id(user.getId())
+
+            .email(user.getEmail())
+
+            .firstName(user.getFirstName())
+
+            .lastName(user.getLastName())
+
+            .phone(user.getPhone())
+
+            .roles(
+                    user.getRoles()
+                            .stream()
+                            .map(role -> role.getName().name())
+                            .collect(Collectors.toSet())
+            )
+
+            .totalOrders(user.getTotalOrders())
+
+            .totalSpent(user.getTotalSpent())
+
+            .build();
+}
 }

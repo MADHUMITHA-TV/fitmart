@@ -1,67 +1,63 @@
-import { Container, Typography, Grid } from "@mui/material";
+import { useEffect } from "react";
+import {
+  Container,
+  Typography,
+  Grid,
+  CircularProgress,
+} from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
 
-import dummyProducts from "../../constants/dummyProducts";
-
+import { fetchProducts } from "../../redux/slices/productSlice";
 import ProductCard from "./ProductCard";
 
 import "./featuredProducts.css";
 
-function FeaturedProducts(){
+function FeaturedProducts() {
+  const dispatch = useDispatch();
 
-return(
+  const { products, loading } = useSelector(
+    (state) => state.products
+  );
 
-<Container sx={{py:8}}>
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
 
-<Typography
+  return (
+    <Container sx={{ py: 8 }}>
+      <Typography
+        variant="h4"
+        fontWeight="bold"
+        textAlign="center"
+        mb={5}
+      >
+        Featured Products
+      </Typography>
 
-variant="h4"
-
-fontWeight="bold"
-
-textAlign="center"
-
-mb={5}
-
->
-
-Featured Products
-
-</Typography>
-
-<Grid container spacing={4}>
-
-{dummyProducts.map(product=>(
-
-<Grid
-
-item
-
-xs={12}
-
-sm={6}
-
-md={3}
-
-key={product.id}
-
->
-
-<ProductCard
-
-product={product}
-
-/>
-
-</Grid>
-
-))}
-
-</Grid>
-
-</Container>
-
-);
-
+      {loading ? (
+        <CircularProgress
+          sx={{
+            display: "block",
+            mx: "auto",
+          }}
+        />
+      ) : (
+        <Grid container spacing={4}>
+          {products.slice(0, 8).map((product) => (
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              md={3}
+              key={product.id}
+            >
+              <ProductCard product={product} />
+            </Grid>
+          ))}
+        </Grid>
+      )}
+    </Container>
+  );
 }
 
 export default FeaturedProducts;

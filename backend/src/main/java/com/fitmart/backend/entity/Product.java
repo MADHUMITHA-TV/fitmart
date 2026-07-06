@@ -31,6 +31,8 @@ public class Product {
     @Column(nullable = false)
     private Integer stockQuantity;
 
+ 
+
     private String brand;
 
     private String imageUrl;
@@ -55,5 +57,9 @@ public class Product {
     public void onUpdate(){
         updatedAt=LocalDateTime.now();
     }
+
+    @Column(nullable = false)
+@Builder.Default
+private Integer soldQuantity = 0;
 
 }

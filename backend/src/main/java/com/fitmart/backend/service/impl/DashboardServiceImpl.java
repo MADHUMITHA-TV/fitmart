@@ -4,11 +4,17 @@ import com.fitmart.backend.dto.response.*;
 import com.fitmart.backend.enums.OrderStatus;
 import com.fitmart.backend.repository.*;
 import com.fitmart.backend.service.DashboardService;
+import com.fitmart.backend.util.OrderMapper;
+import com.fitmart.backend.util.UserMapper;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+
+import com.fitmart.backend.util.OrderMapper;
+import com.fitmart.backend.util.UserMapper;
 
 @Service
 @RequiredArgsConstructor
@@ -75,9 +81,25 @@ public class DashboardServiceImpl implements DashboardService {
 
                 // Reviews
                 .averageRating(
-                        averageRating == null ? 0.0 : averageRating)
+        averageRating == null ? 0.0 : averageRating)
 
-                .build();
+.recentOrders(
+        orderRepository
+                .findTop5ByOrderByCreatedAtDesc()
+                .stream()
+                .map(OrderMapper::toResponse)
+                .toList()
+)
+
+.latestUsers(
+        userRepository
+                .findTop5ByOrderByCreatedAtDesc()
+                .stream()
+                .map(UserMapper::toResponse)
+                .toList()
+)
+
+.build();
 
     }
 

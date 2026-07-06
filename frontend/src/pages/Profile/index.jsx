@@ -1,5 +1,3 @@
-function Home() {
-  return <h1>Profile Page</h1>;
-}
+import Profile from "./Profile";
 
-export default Home;
+export default Profile;

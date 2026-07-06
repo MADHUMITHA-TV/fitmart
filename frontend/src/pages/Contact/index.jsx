@@ -1,5 +1,3 @@
-function Home() {
-  return <h1>Contact Page</h1>;
-}
+import Contact from "./Contact";
 
-export default Home;
+export default Contact;

@@ -1,0 +1,23 @@
+.stats-card{
+    border-radius:18px;
+    text-align:center;
+    transition:.35s;
+    cursor:pointer;
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+}
+
+.stats-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 18px 35px rgba(0,0,0,.15);
+}
+
+.stats-icon{
+    width:65px;
+    height:65px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    margin:auto;
+}

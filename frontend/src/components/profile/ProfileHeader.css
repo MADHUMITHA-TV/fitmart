@@ -1,0 +1,10 @@
+.profile-header-card{
+    border-radius:20px;
+    margin-bottom:35px;
+    box-shadow:0 12px 35px rgba(0,0,0,.08);
+    overflow:hidden;
+}
+
+.profile-header-card .MuiCardContent-root{
+    padding:35px;
+}

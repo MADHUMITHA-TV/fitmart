@@ -1,5 +1,3 @@
-function Home() {
-  return <h1>Cart Page</h1>;
-}
+import Cart from "./Cart";
 
-export default Home;
+export default Cart;

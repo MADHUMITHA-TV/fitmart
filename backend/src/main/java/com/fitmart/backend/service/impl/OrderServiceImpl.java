@@ -24,21 +24,14 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
 
     private final UserRepository userRepository;
-
     private final CartRepository cartRepository;
-
     private final OrderRepository orderRepository;
-
     private final OrderItemRepository orderItemRepository;
-    
     private final ProductRepository productRepository;
-
     private final InventoryTransactionRepository inventoryRepository;
- 
+
     @Override
-    public OrderResponse placeOrder(
-            String email,
-            PlaceOrderRequest request) {
+    public OrderResponse placeOrder(String email, PlaceOrderRequest request) {
 
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() ->
@@ -69,38 +62,38 @@ public class OrderServiceImpl implements OrderService {
 
         for (CartItem item : cart.getItems()) {
 
-    Product product = item.getProduct();
+            Product product = item.getProduct();
 
-    if (product.getStockQuantity() < item.getQuantity()) {
-        throw new BadRequestException(
-                product.getName() + " is out of stock");
-    }
+            if (product.getStockQuantity() < item.getQuantity()) {
+                throw new BadRequestException(
+                        product.getName() + " is out of stock");
+            }
 
-    product.setStockQuantity(
-            product.getStockQuantity() - item.getQuantity());
+            product.setStockQuantity(
+                    product.getStockQuantity() - item.getQuantity());
 
-    productRepository.save(product);
+            productRepository.save(product);
 
-    InventoryTransaction transaction =
-            InventoryTransaction.builder()
+            InventoryTransaction transaction =
+                    InventoryTransaction.builder()
+                            .product(product)
+                            .quantityChange(-item.getQuantity())
+                            .type(InventoryType.ORDER)
+                            .reason("Order Placed")
+                            .build();
+
+            inventoryRepository.save(transaction);
+
+            OrderItem orderItem = OrderItem.builder()
+                    .order(order)
                     .product(product)
-                    .quantityChange(-item.getQuantity())
-                    .type(InventoryType.ORDER)
-                    .reason("Order Placed")
+                    .quantity(item.getQuantity())
+                    .price(product.getPrice())
+                    .totalPrice(item.getTotalPrice())
                     .build();
 
-    inventoryRepository.save(transaction);
-
-    OrderItem orderItem = OrderItem.builder()
-            .order(order)
-            .product(product)
-            .quantity(item.getQuantity())
-            .price(product.getPrice())
-            .totalPrice(item.getTotalPrice())
-            .build();
-
-    orderItems.add(orderItem);
-}
+            orderItems.add(orderItem);
+        }
 
         orderItemRepository.saveAll(orderItems);
 
@@ -129,9 +122,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional(readOnly = true)
-    public OrderResponse getOrderById(
-            String email,
-            Long orderId) {
+    public OrderResponse getOrderById(String email, Long orderId) {
 
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() ->
@@ -149,18 +140,43 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderResponse updateStatus(
-            Long orderId,
-            OrderStatus status) {
+public OrderResponse updateStatus(Long orderId, OrderStatus status) {
 
-        Order order = orderRepository.findById(orderId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Order not found"));
+    Order order = orderRepository.findById(orderId)
+            .orElseThrow(() ->
+                    new ResourceNotFoundException("Order not found"));
 
-        order.setStatus(status);
+    if (order.getStatus() != OrderStatus.DELIVERED
+            && status == OrderStatus.DELIVERED) {
 
-        return OrderMapper.toResponse(orderRepository.save(order));
+        User user = order.getUser();
+
+        user.setTotalOrders(user.getTotalOrders() + 1);
+
+        user.setTotalSpent(
+                user.getTotalSpent().add(order.getTotalAmount())
+        );
+
+        userRepository.save(user);
+
+        for (OrderItem item : order.getOrderItems()) {
+
+            Product product = item.getProduct();
+
+            product.setSoldQuantity(
+                    product.getSoldQuantity() + item.getQuantity()
+            );
+
+            productRepository.save(product);
+        }
     }
+
+    order.setStatus(status);
+
+    orderRepository.save(order);
+
+    return OrderMapper.toResponse(order);
+}
 
     @Override
     public void deleteOrder(Long orderId) {
@@ -171,5 +187,4 @@ public class OrderServiceImpl implements OrderService {
 
         orderRepository.delete(order);
     }
-
 }

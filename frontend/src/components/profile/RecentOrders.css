@@ -1,0 +1,29 @@
+.recent-orders-card{
+
+    margin-top:30px;
+
+    border-radius:20px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+}
+
+.recent-order{
+
+    display:flex;
+
+    gap:20px;
+
+    align-items:center;
+
+    padding:20px 0;
+
+    border-bottom:1px solid #ececec;
+
+}
+
+.recent-order:last-child{
+
+    border-bottom:none;
+
+}

@@ -1,12 +1,8 @@
 package com.fitmart.backend.dto.response;
 
-import com.fitmart.backend.enums.RoleName;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+import java.math.BigDecimal;
 import java.util.Set;
 
 @Getter
@@ -17,9 +13,21 @@ import java.util.Set;
 public class UserResponse {
 
     private Long id;
+
     private String email;
+
     private String firstName;
+
     private String lastName;
+
     private String phone;
-    private Set<RoleName> roles;
+
+    private Set<String> roles;
+
+    // NEW FIELDS
+
+    private Integer totalOrders;
+
+    private BigDecimal totalSpent;
+
 }

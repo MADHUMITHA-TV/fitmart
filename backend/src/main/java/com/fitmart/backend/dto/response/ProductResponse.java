@@ -20,6 +20,7 @@ public class ProductResponse {
     private BigDecimal price;
 
     private Integer stockQuantity;
+     private Integer soldQuantity; 
 
     private String brand;
 

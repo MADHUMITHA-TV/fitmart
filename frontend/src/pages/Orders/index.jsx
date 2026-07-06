@@ -1,5 +1,3 @@
-function Home() {
-  return <h1>Order Page</h1>;
-}
+import Orders from "./Orders";
 
-export default Home;
+export default Orders;
