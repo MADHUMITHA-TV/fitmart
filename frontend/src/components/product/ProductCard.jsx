@@ -10,9 +10,10 @@ import {
   Rating,
 } from "@mui/material";
 
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
+import FavoriteBorderRoundedIcon from "@mui/icons-material/FavoriteBorderRounded";
+import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
+import ShoppingCartRoundedIcon from "@mui/icons-material/ShoppingCartRounded";
+import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
 
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,7 +26,7 @@ import {
   removeFromWishlist,
   fetchWishlist,
 } from "../../redux/slices/wishlistSlice";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+
 import "./ProductCard.css";
 
 function ProductCard({ product }) {
@@ -33,17 +34,23 @@ function ProductCard({ product }) {
   const dispatch = useDispatch();
 
   const addingItems = useSelector(
-  (state) => state.cart.addingItems
-);
+    (state) => state.cart.addingItems
+  );
 
-const wishlist = useSelector(
-  (state) => state.wishlist.wishlist
-);
+  const wishlist = useSelector(
+    (state) => state.wishlist.wishlist
+  );
+
   const isAdding = addingItems[product.id] || false;
+
+  const isWishlisted =
+    wishlist?.items?.some(
+      (item) => item.productId === product.id
+    ) || false;
 
   const image =
     product.imageUrl ||
-    "https://via.placeholder.com/400x300?text=No+Image";
+    "https://via.placeholder.com/500x500?text=FitMart";
 
   const handleAddToCart = async () => {
     const result = await dispatch(
@@ -60,58 +67,93 @@ const wishlist = useSelector(
     }
   };
 
- const handleWishlist = async () => {
-  if (isWishlisted) {
-    const result = await dispatch(
-      removeFromWishlist(product.id)
-    );
+  const handleWishlist = async () => {
+    if (isWishlisted) {
+      const result = await dispatch(
+        removeFromWishlist(product.id)
+      );
 
-    if (removeFromWishlist.fulfilled.match(result)) {
-      toast.success("Removed from wishlist");
-      await dispatch(fetchWishlist());
+      if (removeFromWishlist.fulfilled.match(result)) {
+        toast.success("Removed from wishlist");
+        dispatch(fetchWishlist());
+      } else {
+        toast.error(result.payload);
+      }
     } else {
-      toast.error(result.payload);
+      const result = await dispatch(
+        addToWishlist(product.id)
+      );
+
+      if (addToWishlist.fulfilled.match(result)) {
+        toast.success("Added to wishlist");
+        dispatch(fetchWishlist());
+      } else {
+        toast.error(result.payload);
+      }
     }
-
-  } else {
-
-    const result = await dispatch(
-      addToWishlist(product.id)
-    );
-
-    if (addToWishlist.fulfilled.match(result)) {
-      toast.success("Added to wishlist");
-      await dispatch(fetchWishlist());
-    } else {
-      toast.error(result.payload);
-    }
-
-  }
-};
-  const isWishlisted =
-  wishlist?.items?.some(
-    (item) => item.productId === product.id
-  ) || false;
+  };
 
   return (
     <Card className="product-card">
+
+      {/* Low Stock */}
 
       {product.stockQuantity <= 5 && (
         <Chip
           label="Low Stock"
           color="error"
+          size="small"
           className="stock-chip"
         />
       )}
 
-      <CardMedia
-        component="img"
-        image={image}
-        alt={product.name}
-        className="product-image"
-      />
+      {/* Image */}
 
-      <CardContent>
+      <Box className="product-image-wrapper">
+
+        <CardMedia
+          component="img"
+          image={image}
+          alt={product.name}
+          className="product-image"
+        />
+
+        {/* Wishlist */}
+
+        <IconButton
+          className="wishlist-btn"
+          onClick={handleWishlist}
+        >
+          {isWishlisted ? (
+            <FavoriteRoundedIcon color="error" />
+          ) : (
+            <FavoriteBorderRoundedIcon />
+          )}
+        </IconButton>
+
+        {/* Quick View */}
+
+        <Button
+          className="quick-view"
+          variant="contained"
+          size="small"
+          startIcon={<VisibilityRoundedIcon />}
+          onClick={() =>
+            navigate(`/products/${product.id}`)
+          }
+        >
+          Quick View
+        </Button>
+
+      </Box>
+
+      {/* Content */}
+
+      <CardContent className="product-content">
+
+        <Typography className="category">
+          {product.categoryName}
+        </Typography>
 
         <Typography
           variant="h6"
@@ -121,7 +163,7 @@ const wishlist = useSelector(
         </Typography>
 
         <Typography
-          color="text.secondary"
+          className="brand"
         >
           {product.brand}
         </Typography>
@@ -134,47 +176,37 @@ const wishlist = useSelector(
           sx={{ mt: 1 }}
         />
 
-        <Typography
-          variant="h5"
-          color="primary"
-          sx={{ mt: 2 }}
-        >
-          ₹{product.price}
-        </Typography>
+        <Box className="price-row">
 
-        <Typography
-          color="text.secondary"
-          sx={{ mb: 2 }}
-        >
-          {product.categoryName}
-        </Typography>
+          <Typography className="price">
+            ₹{product.price}
+          </Typography>
+
+        </Box>
 
         <Box className="button-group">
 
           <Button
             variant="contained"
-            fullWidth
-            startIcon={<ShoppingCartOutlinedIcon />}
+            className="cart-btn"
+            startIcon={
+              <ShoppingCartRoundedIcon />
+            }
             disabled={isAdding}
             onClick={handleAddToCart}
           >
-            {isAdding ? "Adding..." : "Add to Cart"}
+            {isAdding
+              ? "Adding..."
+              : "Add to Cart"}
           </Button>
 
-          <IconButton color="error" onClick={handleWishlist}>
-  {isWishlisted ? (
-    <FavoriteIcon />
-  ) : (
-    <FavoriteBorderIcon />
-  )}
-</IconButton>
           <IconButton
-            color="primary"
+            className="icon-btn"
             onClick={() =>
               navigate(`/products/${product.id}`)
             }
           >
-            <VisibilityOutlinedIcon />
+            <VisibilityRoundedIcon />
           </IconButton>
 
         </Box>

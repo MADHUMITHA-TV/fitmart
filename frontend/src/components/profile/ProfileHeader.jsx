@@ -1,124 +1,115 @@
+import { useState } from "react";
 import {
   Avatar,
   Box,
   Button,
   Card,
-  CardContent,
-  Grid,
   Typography,
+  Chip,
 } from "@mui/material";
 
-import EditIcon from "@mui/icons-material/Edit";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
+import EditIcon from "@mui/icons-material/Edit";
 
 import { useSelector } from "react-redux";
-
+import EditProfileDialog from "./EditProfileDialog";
 import "./ProfileHeader.css";
 
 function ProfileHeader() {
   const { user } = useSelector((state) => state.auth);
 
+  const [open, setOpen] = useState(false);
+
   return (
-    <Card className="profile-header-card">
+    <>
+      <Card className="profile-header">
 
-      <CardContent>
+        {/* Cover Image */}
 
-        <Grid
-          container
-          spacing={4}
-          alignItems="center"
-        >
+        <Box className="profile-cover" />
 
-          {/* Avatar */}
+        {/* Content */}
 
-          <Grid item>
+        <Box className="profile-content">
 
-            <Avatar
-              src={user?.profileImage}
-              sx={{
-                width: 120,
-                height: 120,
-                fontSize: 40,
-                bgcolor: "primary.main",
-              }}
-            >
-              {user?.firstName?.charAt(0)}
-            </Avatar>
+          <Avatar
+            src={user?.profileImage}
+            className="profile-avatar"
+          >
+            {user?.firstName?.charAt(0)}
+          </Avatar>
 
-          </Grid>
-
-          {/* User Details */}
-
-          <Grid item xs>
+          <Box flex={1}>
 
             <Typography
               variant="h4"
-              fontWeight="bold"
+              fontWeight={700}
             >
               {user?.firstName} {user?.lastName}
             </Typography>
 
-            <Box
-              display="flex"
-              alignItems="center"
-              mt={2}
-              gap={1}
-            >
-              <EmailOutlinedIcon color="primary" />
+            <Chip
+              label="Premium Member"
+              color="primary"
+              size="small"
+              sx={{ mt: 1 }}
+            />
 
-              <Typography color="text.secondary">
-                {user?.email}
-              </Typography>
+            <Box className="profile-info">
+
+              <Box className="info-row">
+                <EmailOutlinedIcon fontSize="small" />
+                <Typography>
+                  {user?.email || "-"}
+                </Typography>
+              </Box>
+
+              <Box className="info-row">
+                <PhoneOutlinedIcon fontSize="small" />
+                <Typography>
+                  {user?.phone || "-"}
+                </Typography>
+              </Box>
+
+              <Box className="info-row">
+                <CalendarMonthOutlinedIcon fontSize="small" />
+                <Typography>
+                  Joined{" "}
+                  {user?.createdAt
+                    ? user.createdAt.substring(0, 10)
+                    : "-"}
+                </Typography>
+              </Box>
+
             </Box>
 
-            <Box
-              display="flex"
-              alignItems="center"
-              mt={1}
-              gap={1}
-            >
-              <PhoneOutlinedIcon color="primary" />
+          </Box>
 
-              <Typography color="text.secondary">
-                {user?.phone}
-              </Typography>
-            </Box>
+          <Button
+            variant="contained"
+            startIcon={<EditIcon />}
+            onClick={() => setOpen(true)}
+            sx={{
+              borderRadius: "12px",
+              textTransform: "none",
+              px: 3,
+              height: "45px",
+            }}
+          >
+            Edit Profile
+          </Button>
 
-            <Box
-              display="flex"
-              alignItems="center"
-              mt={1}
-              gap={1}
-            >
-              <CalendarMonthOutlinedIcon color="primary" />
+        </Box>
 
-              <Typography color="text.secondary">
-                Member Since {user?.createdAt?.substring(0, 10)}
-              </Typography>
-            </Box>
+      </Card>
 
-          </Grid>
-
-          {/* Edit Button */}
-
-          <Grid item>
-
-            <Button
-              variant="contained"
-              startIcon={<EditIcon />}
-            >
-              Edit Profile
-            </Button>
-
-          </Grid>
-
-        </Grid>
-
-      </CardContent>
-
-    </Card>
+      <EditProfileDialog
+        open={open}
+        handleClose={() => setOpen(false)}
+      />
+    </>
   );
 }
 

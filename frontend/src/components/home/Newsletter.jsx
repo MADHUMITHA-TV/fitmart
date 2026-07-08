@@ -1,63 +1,166 @@
 import {
-Container,
-Typography,
-TextField,
-Button,
-Box
+  Box,
+  Button,
+  Container,
+  TextField,
+  Typography,
+  Stack,
 } from "@mui/material";
 
-import "./newsletter.css";
+import EmailRoundedIcon from "@mui/icons-material/EmailRounded";
+import FitnessCenterRoundedIcon from "@mui/icons-material/FitnessCenter";
+import LocalOfferRoundedIcon from "@mui/icons-material/LocalOfferRounded";
+import HealthAndSafetyRoundedIcon from "@mui/icons-material/HealthAndSafetyRounded";
 
-function Newsletter(){
+import "./Newsletter.css";
 
-return(
 
-<Box className="newsletter">
+function Newsletter() {
 
-<Container maxWidth="sm">
 
-<Typography
-variant="h4"
-fontWeight="bold"
-mb={3}
->
+  return (
 
-Subscribe to our Newsletter
+    <Box className="newsletter">
 
-</Typography>
 
-<Typography mb={4}>
+      <Container maxWidth="lg">
 
-Get the latest deals and offers.
 
-</Typography>
+        <Box className="newsletter-card">
 
-<Box className="newsletter-form">
 
-<TextField
+          {/* Header */}
 
-fullWidth
 
-placeholder="Enter email"
+          <Typography
+            className="newsletter-title"
+            variant="h3"
+          >
 
-/>
+            Join the FitMart Community
 
-<Button
-variant="contained"
->
+          </Typography>
 
-Subscribe
 
-</Button>
 
-</Box>
+          <Typography
+            className="newsletter-subtitle"
+          >
 
-</Container>
+            Get exclusive fitness deals, workout tips,
+            nutrition advice and product updates
+            delivered to your inbox.
 
-</Box>
+          </Typography>
 
-);
+
+
+          {/* Form */}
+
+
+          <Box className="newsletter-form">
+
+
+            <TextField
+
+              fullWidth
+
+              placeholder="Enter your email address"
+
+              className="newsletter-input"
+
+            />
+
+
+            <Button
+
+              variant="contained"
+
+              startIcon={
+                <EmailRoundedIcon/>
+              }
+
+              className="newsletter-button"
+
+            >
+
+              Subscribe
+
+            </Button>
+
+
+          </Box>
+
+
+
+          {/* Benefits */}
+
+
+          <Stack
+
+            className="newsletter-benefits"
+
+            direction={{
+              xs:"column",
+              sm:"row"
+            }}
+
+            spacing={3}
+
+          >
+
+
+            <Box className="benefit-item">
+
+              <FitnessCenterRoundedIcon/>
+
+              <Typography>
+                Workout Tips
+              </Typography>
+
+            </Box>
+
+
+
+            <Box className="benefit-item">
+
+              <LocalOfferRoundedIcon/>
+
+              <Typography>
+                Exclusive Offers
+              </Typography>
+
+            </Box>
+
+
+
+            <Box className="benefit-item">
+
+              <HealthAndSafetyRoundedIcon/>
+
+              <Typography>
+                Nutrition Updates
+              </Typography>
+
+            </Box>
+
+
+
+          </Stack>
+
+
+
+        </Box>
+
+
+      </Container>
+
+
+    </Box>
+
+  );
 
 }
+
 
 export default Newsletter;

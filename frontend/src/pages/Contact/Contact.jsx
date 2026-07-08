@@ -9,10 +9,12 @@ import {
   Button,
 } from "@mui/material";
 
-import EmailIcon from "@mui/icons-material/Email";
-import PhoneIcon from "@mui/icons-material/Phone";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
+import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
+import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
+
+import { motion } from "framer-motion";
+
 
 import "./Contact.css";
 
@@ -20,260 +22,267 @@ function Contact() {
   return (
     <Box className="contact-page">
 
-      {/* Hero */}
+      {/* ================= HERO ================= */}
 
       <Box className="contact-hero">
 
-        <Container>
+        <Container maxWidth="md">
 
           <Typography
             variant="h2"
             className="hero-title"
           >
-            Contact Us
+            Get In Touch
           </Typography>
 
-          <Typography
-            variant="h6"
-            className="hero-subtitle"
-          >
-            We'd love to hear from you. Reach out anytime!
+          <Typography className="hero-subtitle">
+            We'd love to hear from you. Whether you have
+            questions about our products or need help with
+            your order, our team is always ready to assist.
           </Typography>
 
         </Container>
 
       </Box>
 
-      {/* Contact Information */}
+      {/* ================= CONTACT INFO ================= */}
 
-      <Container sx={{ py: 8 }}>
+      <Box className="contact-info">
 
-        <Grid container spacing={4}>
+        <Container maxWidth="lg">
 
-          <Grid item xs={12} md={4}>
+          <Grid container spacing={4}>
 
-            <Card className="contact-card">
+            <Grid item xs={12} md={4}>
 
-              <CardContent>
-
-                <EmailIcon
-                  color="primary"
-                  sx={{ fontSize: 50 }}
-                />
-
-                <Typography
-                  variant="h6"
-                  mt={2}
-                >
-                  Email
-                </Typography>
-
-                <Typography color="text.secondary">
-                  support@fitmart.com
-                </Typography>
-
-              </CardContent>
-
-            </Card>
-
-          </Grid>
-
-          <Grid item xs={12} md={4}>
-
-            <Card className="contact-card">
-
-              <CardContent>
-
-                <PhoneIcon
-                  color="primary"
-                  sx={{ fontSize: 50 }}
-                />
-
-                <Typography
-                  variant="h6"
-                  mt={2}
-                >
-                  Phone
-                </Typography>
-
-                <Typography color="text.secondary">
-                  +91 98765 43210
-                </Typography>
-
-              </CardContent>
-
-            </Card>
-
-          </Grid>
-
-          <Grid item xs={12} md={4}>
-
-            <Card className="contact-card">
-
-              <CardContent>
-
-                <LocationOnIcon
-                  color="primary"
-                  sx={{ fontSize: 50 }}
-                />
-
-                <Typography
-                  variant="h6"
-                  mt={2}
-                >
-                  Office
-                </Typography>
-
-                <Typography color="text.secondary">
-                  Coimbatore, Tamil Nadu
-                </Typography>
-
-              </CardContent>
-
-            </Card>
-
-          </Grid>
-
-        </Grid>
-
-      </Container>
-
-      {/* Contact Form */}
-
-      <Container sx={{ pb: 8 }}>
-
-        <Grid
-          container
-          spacing={6}
-          alignItems="center"
-        >
-
-          <Grid item xs={12} md={7}>
-
-            <Typography
-              variant="h4"
-              fontWeight="bold"
-              mb={3}
-            >
-              Send us a Message
-            </Typography>
-
-            <TextField
-              fullWidth
-              label="Full Name"
-              margin="normal"
-            />
-
-            <TextField
-              fullWidth
-              label="Email"
-              margin="normal"
-            />
-
-            <TextField
-              fullWidth
-              label="Subject"
-              margin="normal"
-            />
-
-            <TextField
-              fullWidth
-              multiline
-              rows={5}
-              label="Message"
-              margin="normal"
-            />
-
-            <Button
-              variant="contained"
-              size="large"
-              sx={{ mt: 3 }}
-            >
-              Send Message
-            </Button>
-
-          </Grid>
-
-          {/* Support */}
-
-          <Grid item xs={12} md={5}>
-
-            <Box className="support-box">
-
-              <AccessTimeIcon
-                sx={{
-                  fontSize: 55,
-                  color: "#1976d2",
-                }}
-              />
-
-              <Typography
-                variant="h5"
-                fontWeight="bold"
-                mt={2}
+              <motion.div
+                whileHover={{ y: -8 }}
               >
-                Customer Support
-              </Typography>
 
-              <Typography mt={2}>
-                Monday - Friday
-              </Typography>
+                <Card className="contact-card">
 
-              <Typography>
-                9:00 AM - 8:00 PM
-              </Typography>
+                  <CardContent>
 
-              <Typography mt={4}>
-                Saturday
-              </Typography>
+                    <Box className="contact-icon">
 
-              <Typography>
-                10:00 AM - 6:00 PM
-              </Typography>
+                      <EmailOutlinedIcon
+                        sx={{ fontSize: 38 }}
+                      />
 
-              <Typography
-                mt={4}
-                color="primary"
+                    </Box>
+
+                    <Typography
+                      variant="h6"
+                      mt={3}
+                      fontWeight={700}
+                    >
+                      Email Us
+                    </Typography>
+
+                    <Typography
+                      color="text.secondary"
+                      mt={1}
+                    >
+                      support@fitmart.com
+                    </Typography>
+
+                  </CardContent>
+
+                </Card>
+
+              </motion.div>
+
+            </Grid>
+
+            <Grid item xs={12} md={4}>
+
+              <motion.div
+                whileHover={{ y: -8 }}
               >
-                support@fitmart.com
-              </Typography>
 
-            </Box>
+                <Card className="contact-card">
+
+                  <CardContent>
+
+                    <Box className="contact-icon">
+
+                      <PhoneOutlinedIcon
+                        sx={{ fontSize: 38 }}
+                      />
+
+                    </Box>
+
+                    <Typography
+                      variant="h6"
+                      mt={3}
+                      fontWeight={700}
+                    >
+                      Call Us
+                    </Typography>
+
+                    <Typography
+                      color="text.secondary"
+                      mt={1}
+                    >
+                      +91 98765 43210
+                    </Typography>
+
+                  </CardContent>
+
+                </Card>
+
+              </motion.div>
+
+            </Grid>
+
+            <Grid item xs={12} md={4}>
+
+              <motion.div
+                whileHover={{ y: -8 }}
+              >
+
+                <Card className="contact-card">
+
+                  <CardContent>
+
+                    <Box className="contact-icon">
+
+                      <LocationOnOutlinedIcon
+                        sx={{ fontSize: 38 }}
+                      />
+
+                    </Box>
+
+                    <Typography
+                      variant="h6"
+                      mt={3}
+                      fontWeight={700}
+                    >
+                      Visit Us
+                    </Typography>
+
+                    <Typography
+                      color="text.secondary"
+                      mt={1}
+                    >
+                      Coimbatore, Tamil Nadu
+                    </Typography>
+
+                  </CardContent>
+
+                </Card>
+
+              </motion.div>
+
+            </Grid>
 
           </Grid>
 
-        </Grid>
-
-      </Container>
-
-      {/* Map */}
-
-      <Box className="map-section">
-
-        <iframe
-          title="Google Map"
-          width="100%"
-          height="450"
-          loading="lazy"
-          style={{
-            border: 0,
-          }}
-          src="https://www.google.com/maps?q=Coimbatore&output=embed"
-        />
+        </Container>
 
       </Box>
 
-      {/* FAQ */}
+      {/* ================= CONTACT FORM ================= */}
+
+      <Box className="contact-section">
+
+        <Container maxWidth="lg">
+
+          <Grid
+            container
+            spacing={6}
+            alignItems="center"
+          >
+
+            <Grid item xs={12} md={6}>
+
+              <motion.div
+                initial={{
+                  opacity: 0,
+                  x: -40,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  x: 0,
+                }}
+                transition={{
+                  duration: 0.7,
+                }}
+              >
+
+                <Box className="contact-form">
+
+                  <Typography
+                    variant="h4"
+                    gutterBottom
+                  >
+                    Send us a Message
+                  </Typography>
+
+                  <Typography
+                    color="text.secondary"
+                    mb={3}
+                  >
+                    Fill out the form below and we'll
+                    get back to you shortly.
+                  </Typography>
+
+                  <TextField
+                    fullWidth
+                    label="Full Name"
+                    margin="normal"
+                  />
+
+                  <TextField
+                    fullWidth
+                    label="Email Address"
+                    margin="normal"
+                  />
+
+                  <TextField
+                    fullWidth
+                    label="Subject"
+                    margin="normal"
+                  />
+
+                  <TextField
+                    fullWidth
+                    multiline
+                    rows={5}
+                    label="Your Message"
+                    margin="normal"
+                  />
+
+                  <Button
+                    variant="contained"
+                    className="send-btn"
+                  >
+                    Send Message
+                  </Button>
+
+                </Box>
+
+              </motion.div>
+
+            </Grid>
+
+
+          </Grid>
+
+        </Container>
+
+      </Box>
+
+      {/* ================= FAQ ================= */}
 
       <Box className="faq-section">
 
-        <Container>
+        <Container maxWidth="lg">
 
           <Typography
             variant="h3"
             align="center"
-            fontWeight="bold"
-            mb={5}
+            className="faq-title"
           >
             Frequently Asked Questions
           </Typography>
@@ -286,12 +295,19 @@ function Contact() {
 
                 <CardContent>
 
-                  <Typography variant="h6">
+                  <Typography
+                    variant="h6"
+                    fontWeight={700}
+                  >
                     How long does delivery take?
                   </Typography>
 
-                  <Typography color="text.secondary">
-                    Usually between 2-5 business days.
+                  <Typography
+                    color="text.secondary"
+                    mt={1}
+                  >
+                    Most orders are delivered within
+                    2–5 business days across India.
                   </Typography>
 
                 </CardContent>
@@ -306,52 +322,19 @@ function Contact() {
 
                 <CardContent>
 
-                  <Typography variant="h6">
-                    Can I return products?
+                  <Typography
+                    variant="h6"
+                    fontWeight={700}
+                  >
+                    Are your supplements authentic?
                   </Typography>
 
-                  <Typography color="text.secondary">
-                    Yes. Returns are accepted within 7 days.
-                  </Typography>
-
-                </CardContent>
-
-              </Card>
-
-            </Grid>
-
-            <Grid item xs={12} md={6}>
-
-              <Card className="faq-card">
-
-                <CardContent>
-
-                  <Typography variant="h6">
-                    Is online payment secure?
-                  </Typography>
-
-                  <Typography color="text.secondary">
-                    Absolutely. We use encrypted payment gateways.
-                  </Typography>
-
-                </CardContent>
-
-              </Card>
-
-            </Grid>
-
-            <Grid item xs={12} md={6}>
-
-              <Card className="faq-card">
-
-                <CardContent>
-
-                  <Typography variant="h6">
-                    Do you provide customer support?
-                  </Typography>
-
-                  <Typography color="text.secondary">
-                    Yes, our support team is available 24×7.
+                  <Typography
+                    color="text.secondary"
+                    mt={1}
+                  >
+                    Yes. We only sell products from
+                    trusted and verified brands.
                   </Typography>
 
                 </CardContent>

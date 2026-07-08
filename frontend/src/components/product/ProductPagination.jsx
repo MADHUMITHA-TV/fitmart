@@ -1,24 +1,44 @@
-import { Box, Pagination } from "@mui/material";
+import {
+  Box,
+  Pagination,
+} from "@mui/material";
+
+import "./ProductPagination.css";
 
 function ProductPagination({
   page,
   totalPages,
   onChange,
 }) {
+
+  if (totalPages <= 1) return null;
+
   return (
-    <Box
-      display="flex"
-      justifyContent="center"
-      mt={5}
-    >
+
+    <Box className="pagination-wrapper">
+
       <Pagination
+
         page={page}
+
         count={totalPages}
+
+        onChange={(_, value) =>
+          onChange(value)
+        }
+
+        shape="rounded"
+
         color="primary"
-        onChange={(_,value)=>onChange(value)}
+
+        size="large"
+
       />
+
     </Box>
+
   );
+
 }
 
 export default ProductPagination;

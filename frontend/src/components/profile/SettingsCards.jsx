@@ -2,8 +2,12 @@ import {
   Card,
   CardContent,
   Typography,
-  Grid,
   Box,
+  List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Divider,
 } from "@mui/material";
 
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -12,6 +16,7 @@ import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -25,53 +30,47 @@ function SettingsCards() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const cards = [
+  const settings = [
 
     {
       title: "Change Password",
-      subtitle: "Update your account password",
+      subtitle: "Update your password",
       icon: <LockOutlinedIcon />,
-      color: "#1565C0",
       action: () => navigate("/change-password"),
     },
 
     {
       title: "Manage Addresses",
-      subtitle: "Shipping & Billing addresses",
+      subtitle: "Shipping & Billing",
       icon: <HomeOutlinedIcon />,
-      color: "#43A047",
       action: () => navigate("/addresses"),
     },
 
     {
       title: "Notifications",
-      subtitle: "Email & Push settings",
+      subtitle: "Email & Push Notifications",
       icon: <NotificationsOutlinedIcon />,
-      color: "#EF6C00",
       action: () => {},
     },
 
     {
       title: "Privacy & Security",
-      subtitle: "Manage your account security",
+      subtitle: "Manage account security",
       icon: <SecurityOutlinedIcon />,
-      color: "#8E24AA",
       action: () => {},
     },
 
     {
       title: "Help & Support",
-      subtitle: "Contact FitMart Support",
+      subtitle: "Contact FitMart",
       icon: <HelpOutlineOutlinedIcon />,
-      color: "#0097A7",
       action: () => navigate("/contact"),
     },
 
     {
       title: "Logout",
-      subtitle: "Sign out from your account",
-      icon: <LogoutOutlinedIcon />,
-      color: "#E53935",
+      subtitle: "Sign out",
+      icon: <LogoutOutlinedIcon color="error" />,
       action: () => {
         dispatch(logout());
         navigate("/login");
@@ -82,67 +81,56 @@ function SettingsCards() {
 
   return (
 
-    <Box mt={4}>
+    <Card className="settings-card">
 
-      <Typography
-        variant="h5"
-        fontWeight="bold"
-        mb={3}
-      >
-        Account Settings
-      </Typography>
+      <CardContent>
 
-      <Grid container spacing={3}>
+        <Typography
+          variant="h5"
+          fontWeight={700}
+          mb={3}
+        >
+          Account Settings
+        </Typography>
 
-        {cards.map((card) => (
+        <List>
 
-          <Grid
-            item
-            xs={12}
-            sm={6}
-            md={4}
-            key={card.title}
-          >
+          {settings.map((item, index) => (
 
-            <Card
-              className="settings-card"
-              onClick={card.action}
-            >
+            <Box key={item.title}>
 
-              <CardContent>
+              <ListItemButton
+                className="setting-item"
+                onClick={item.action}
+              >
 
-                <Box
-                  className="settings-icon"
-                  sx={{
-                    background: card.color,
-                  }}
-                >
-                  {card.icon}
-                </Box>
+                <ListItemIcon>
 
-                <Typography
-                  variant="h6"
-                  mt={2}
-                  fontWeight={700}
-                >
-                  {card.title}
-                </Typography>
+                  {item.icon}
 
-                <Typography color="text.secondary">
-                  {card.subtitle}
-                </Typography>
+                </ListItemIcon>
 
-              </CardContent>
+                <ListItemText
+                  primary={item.title}
+                  secondary={item.subtitle}
+                />
 
-            </Card>
+                <ChevronRightIcon />
 
-          </Grid>
+              </ListItemButton>
 
-        ))}
+              {index !== settings.length - 1 &&
+                <Divider />}
 
-      </Grid>
+            </Box>
 
-    </Box>
+          ))}
+
+        </List>
+
+      </CardContent>
+
+    </Card>
 
   );
 

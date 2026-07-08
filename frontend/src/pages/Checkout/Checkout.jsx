@@ -1,11 +1,19 @@
 import { useState } from "react";
 import {
+  Box,
+  Button,
   Container,
   Grid,
-  Typography,
   Paper,
-  Button,
+  Step,
+  StepLabel,
+  Stepper,
+  Typography,
 } from "@mui/material";
+
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import PaymentsIcon from "@mui/icons-material/Payments";
+import SecurityIcon from "@mui/icons-material/Security";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -20,14 +28,18 @@ import { fetchCart } from "../../redux/slices/cartSlice";
 
 import "./Checkout.css";
 
-function Checkout() {
+const steps = ["Cart", "Checkout", "Complete"];
+
+export default function Checkout() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { cart } = useSelector((state) => state.cart);
   const { loading } = useSelector((state) => state.orders);
 
-  const [paymentMethod, setPaymentMethod] = useState("Cash On Delivery");
+  const [paymentMethod, setPaymentMethod] = useState(
+    "Cash On Delivery"
+  );
 
   const [address, setAddress] = useState({
     fullName: "",
@@ -92,64 +104,177 @@ ${address.state} - ${address.pincode}
   }
 
   return (
-    <Container maxWidth="xl" className="checkout-page">
+    <Box className="checkout-page">
+      <Container maxWidth="xl">
 
-      <Typography
-        variant="h4"
-        gutterBottom
-        fontWeight={700}
-      >
-        Checkout
-      </Typography>
+        {/* Stepper */}
 
-      <Grid container spacing={4}>
+        <Stepper
+          activeStep={1}
+          alternativeLabel
+          sx={{ mb: 5 }}
+        >
+          {steps.map((step) => (
+            <Step key={step}>
+              <StepLabel>{step}</StepLabel>
+            </Step>
+          ))}
+        </Stepper>
 
-        <Grid item xs={12} md={8}>
+        {/* Heading */}
 
-          <Paper className="checkout-section">
+        <Box mb={5}>
 
-            <AddressForm
-              address={address}
-              setAddress={setAddress}
-            />
-
-          </Paper>
-
-          <Paper
-            className="checkout-section"
-            sx={{ mt: 3 }}
+          <Typography
+            variant="h3"
+            fontWeight={800}
           >
+            Checkout
+          </Typography>
 
-            <PaymentSection
-              paymentMethod={paymentMethod}
-              setPaymentMethod={setPaymentMethod}
-            />
+          <Typography
+            color="text.secondary"
+            mt={1}
+          >
+            Complete your purchase by filling your shipping
+            details and selecting a payment method.
+          </Typography>
 
-          </Paper>
+        </Box>
+
+        <Grid container spacing={4}>
+
+          {/* Left Side */}
+
+          <Grid item xs={12} lg={8}>
+
+            {/* Address */}
+
+            <Paper className="checkout-card">
+
+              <Box
+                display="flex"
+                alignItems="center"
+                mb={4}
+              >
+
+        
+              </Box>
+
+              <AddressForm
+                address={address}
+                setAddress={setAddress}
+              />
+
+            </Paper>
+
+            {/* Payment */}
+
+            <Paper
+              className="checkout-card"
+              sx={{ mt: 4 }}
+            >
+
+              <Box
+                display="flex"
+                alignItems="center"
+                mb={4}
+              >
+
+                <Box className="checkout-icon">
+
+                  <PaymentsIcon color="primary" />
+
+                </Box>
+
+                <Box>
+
+                  <Typography
+                    variant="h6"
+                    fontWeight={700}
+                  >
+                    Payment Method
+                  </Typography>
+
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                  >
+                    Select your preferred payment option
+                  </Typography>
+
+                </Box>
+
+              </Box>
+
+              <PaymentSection
+                paymentMethod={paymentMethod}
+                setPaymentMethod={setPaymentMethod}
+              />
+
+            </Paper>
+
+          </Grid>
+
+          {/* Right Side */}
+
+          <Grid item xs={12} lg={4}>
+
+            <Box
+              sx={{
+                position: {
+                  lg: "sticky",
+                },
+                top: 100,
+              }}
+            >
+
+              <CheckoutSummary cart={cart} />
+
+              <Button
+                fullWidth
+                size="large"
+                variant="contained"
+                onClick={handlePlaceOrder}
+                disabled={loading}
+                className="place-order-btn"
+              >
+                {loading
+                  ? "Placing Order..."
+                  : "Place Order"}
+              </Button>
+
+              {/* Trust Card */}
+
+              <Paper className="trust-card">
+
+                <SecurityIcon color="success" />
+
+                <Box>
+
+                  <Typography fontWeight={600}>
+                    Secure Checkout
+                  </Typography>
+
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                  >
+                    All payments are protected using secure
+                    encryption.
+                  </Typography>
+
+                </Box>
+
+              </Paper>
+
+            </Box>
+
+          </Grid>
 
         </Grid>
 
-        <Grid item xs={12} md={4}>
-
-          <CheckoutSummary cart={cart} />
-
-          <Button
-            fullWidth
-            variant="contained"
-            size="large"
-            sx={{ mt: 3 }}
-            onClick={handlePlaceOrder}
-            disabled={loading}
-          >
-            {loading ? "Placing Order..." : "Place Order"}
-          </Button>
-
-        </Grid>
-
-      </Grid>
-
-    </Container>
+      </Container>
+    </Box>
   );
 }
-
-export default Checkout;

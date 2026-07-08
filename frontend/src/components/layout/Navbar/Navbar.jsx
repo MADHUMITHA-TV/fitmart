@@ -97,29 +97,7 @@ const wishlistCount = wishlist?.items?.length || 0;
             FitMart
           </Typography>
 
-          {/* Search */}
-
-          <Box
-            className="search-box"
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              px: 2,
-              py: 0.5,
-              backgroundColor: alpha("#fff", 0.15),
-            }}
-          >
-            <SearchIcon />
-
-            <InputBase
-              placeholder="Search products..."
-              sx={{
-                ml: 1,
-                color: "white",
-                width: "100%",
-              }}
-            />
-          </Box>
+         
 
           {/* Desktop Links */}
 

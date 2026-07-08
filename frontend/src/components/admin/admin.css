@@ -1,17 +1,19 @@
 .admin-container {
-    display: flex;
-    min-height: 100vh;
-    background: #f4f6fb;
+  display: flex;
+  min-height: 100vh;
+  background: #f5f7fb;
 }
 
 .admin-main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    margin-left: 250px;
+  flex: 1;
+  margin-left: 280px;
+  display: flex;
+  flex-direction: column;
 }
 
 .admin-content {
-    margin-top: 64px;      /* height of AppBar */
-    padding: 32px;
+  margin-top: 80px;
+  padding: 30px;
+  background: #f5f7fb;
+  min-height: calc(100vh - 80px);
 }

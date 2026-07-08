@@ -1,29 +1,35 @@
 .recent-orders-card{
 
-    margin-top:30px;
+margin-top:35px;
 
-    border-radius:20px;
+border-radius:22px !important;
 
-    box-shadow:0 10px 30px rgba(0,0,0,.08);
-
-}
-
-.recent-order{
-
-    display:flex;
-
-    gap:20px;
-
-    align-items:center;
-
-    padding:20px 0;
-
-    border-bottom:1px solid #ececec;
+box-shadow:0 10px 30px rgba(0,0,0,.06)!important;
 
 }
 
-.recent-order:last-child{
+.order-item{
 
-    border-bottom:none;
+display:flex;
+
+align-items:center;
+
+gap:25px;
+
+padding:22px 0;
+
+transition:.3s;
+
+}
+
+.order-item:hover{
+
+transform:translateX(5px);
+
+}
+
+.order-item:last-child{
+
+padding-bottom:0;
 
 }

@@ -4,66 +4,80 @@ import {
   Typography,
   Box,
   Avatar,
+  IconButton,
+  Badge,
+  Paper,
+  InputBase,
 } from "@mui/material";
+
+import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
+import NotificationsRoundedIcon from "@mui/icons-material/NotificationsRounded";
+import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
 
 import { useSelector } from "react-redux";
 
-function Topbar() {
-
+export default function Topbar() {
   const { user } = useSelector(
     (state) => state.auth
   );
 
   return (
-
     <AppBar
-  position="fixed"
-  sx={{
-    width: "calc(100% - 250px)",
-    ml: "250px",
-    backgroundColor: "#fff",
-    color: "#000",
-    boxShadow: 1,
-  }}
->
+      elevation={0}
+      position="fixed"
+      sx={{
+        width: "calc(100% - 280px)",
+        ml: "280px",
+        bgcolor: "rgba(255,255,255,.9)",
+        backdropFilter: "blur(12px)",
+        borderBottom: "1px solid #eee",
+        color: "#111827",
+      }}
+    >
+      <Toolbar sx={{ py: 1 }}>
+        
 
-      <Toolbar>
+        {/* Search */}
 
-        <Typography
-          variant="h6"
-          sx={{ flexGrow: 1 }}
-        >
-          Dashboard
-        </Typography>
+        
 
+        <Box sx={{ flexGrow: 1 }} />
+
+        
+
+        
         <Box
           display="flex"
           alignItems="center"
           gap={2}
         >
+          <Box textAlign="right">
+            <Typography
+              fontWeight={700}
+            >
+              {user?.firstName}
+            </Typography>
 
-          <Typography>
+            <Typography
+              variant="body2"
+              color="text.secondary"
+            >
+              Administrator
+            </Typography>
+          </Box>
 
-            Welcome,
-
-            {user?.firstName}
-
-          </Typography>
-
-          <Avatar>
-
+          <Avatar
+            sx={{
+              bgcolor: "#6366f1",
+              width: 46,
+              height: 46,
+              fontWeight: 700,
+            }}
+          >
             {user?.firstName?.charAt(0)}
-
           </Avatar>
-
         </Box>
-
       </Toolbar>
-
     </AppBar>
-
   );
-
 }
-
-export default Topbar;

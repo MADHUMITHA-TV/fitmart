@@ -3,7 +3,15 @@ import {
   TextField,
   MenuItem,
   Typography,
+  InputAdornment,
+  Paper,
 } from "@mui/material";
+
+import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
+import SortRoundedIcon from "@mui/icons-material/SortRounded";
+import Inventory2RoundedIcon from "@mui/icons-material/Inventory2Rounded";
+
+import "./ProductToolbar.css";
 
 function ProductToolbar({
   search,
@@ -13,41 +21,64 @@ function ProductToolbar({
   productCount,
 }) {
   return (
-    <Box
-  sx={{
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    flexWrap: "wrap",
-    gap: 2,
-  }}
->
-      <Typography variant="h6">
-        {productCount} Products
-      </Typography>
+    <Paper className="toolbar-card">
 
-      <TextField
-        size="small"
-        label="Search"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
+      {/* Product Count */}
 
-      <TextField
-        select
-        size="small"
-        label="Sort By"
-        value={sortBy}
-        onChange={(e) => setSortBy(e.target.value)}
-        sx={{ minWidth: 180 }}
-      >
-        <MenuItem value="name">Name</MenuItem>
+      <Box className="toolbar-count">
 
-<MenuItem value="price">Price</MenuItem>
+        <Inventory2RoundedIcon
+          sx={{
+            color: "#2563EB",
+            fontSize: 30,
+          }}
+        />
 
-<MenuItem value="brand">Brand</MenuItem>
-      </TextField>
-    </Box>
+        <Box>
+
+          <Typography
+            variant="h6"
+            fontWeight={700}
+          >
+            {productCount} Products
+          </Typography>
+
+          <Typography
+            variant="body2"
+            color="text.secondary"
+          >
+            Explore our premium fitness collection
+          </Typography>
+
+        </Box>
+
+      </Box>
+
+      {/* Search + Sort */}
+
+      <Box className="toolbar-actions">
+
+        <TextField
+          placeholder="Search fitness products..."
+          value={search}
+          onChange={(e) =>
+            setSearch(e.target.value)
+          }
+          className="toolbar-search"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchRoundedIcon />
+              </InputAdornment>
+            ),
+          }}
+        />
+
+        
+
+      </Box>
+
+    </Paper>
   );
 }
 

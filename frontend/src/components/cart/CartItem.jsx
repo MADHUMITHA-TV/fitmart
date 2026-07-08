@@ -75,62 +75,123 @@ function CartItem({ item }) {
   };
 
   return (
-    <Card className="cart-item">
-      <CardMedia
-        component="img"
-        image={item.imageUrl}
-        alt={item.productName}
-        className="cart-image"
-      />
+  <Card className="cart-item">
+    <CardMedia
+      component="img"
+      image={item.imageUrl}
+      alt={item.productName}
+      className="cart-image"
+    />
 
-      <CardContent className="cart-content">
-        <Typography variant="h6">
-          {item.productName}
-        </Typography>
+    <CardContent className="cart-content">
+      <Typography
+        variant="h6"
+        fontWeight={700}
+        color="#111827"
+      >
+        {item.productName}
+      </Typography>
 
-        <Typography color="primary" fontWeight="bold">
-          ₹{item.price}
-        </Typography>
-
-        <Box className="quantity-box">
-          <IconButton onClick={handleDecrease}>
-            <RemoveIcon />
-          </IconButton>
-
-          <Typography fontWeight="bold">
-            {item.quantity}
-          </Typography>
-
-          <IconButton onClick={handleIncrease}>
-            <AddIcon />
-          </IconButton>
-        </Box>
-
-        <Button
-          color="error"
-          variant="outlined"
-          startIcon={<DeleteOutlineIcon />}
-          onClick={handleRemove}
-        >
-          Remove
-        </Button>
-      </CardContent>
-
-      <Box
-        className="total-price"
+      <Typography
         sx={{
-          display: "flex",
-          alignItems: "center",
-          pr: 3,
-          fontWeight: "bold",
-          fontSize: "20px",
-          color: "#1976d2",
+          mt: 1,
+          color: "#6B7280",
+          fontSize: 15,
+        }}
+      >
+        Price per item
+      </Typography>
+
+      <Typography
+        sx={{
+          color: "#2563EB",
+          fontWeight: 700,
+          fontSize: 22,
+        }}
+      >
+        ₹{item.price}
+      </Typography>
+
+      <Box className="quantity-box">
+        <IconButton
+          onClick={handleDecrease}
+          sx={{
+            bgcolor: "#F3F4F6",
+            "&:hover": {
+              bgcolor: "#E5E7EB",
+            },
+          }}
+        >
+          <RemoveIcon />
+        </IconButton>
+
+        <Typography
+          sx={{
+            width: 40,
+            textAlign: "center",
+            fontWeight: 700,
+            fontSize: 18,
+          }}
+        >
+          {item.quantity}
+        </Typography>
+
+        <IconButton
+          onClick={handleIncrease}
+          sx={{
+            bgcolor: "#EFF6FF",
+            color: "#2563EB",
+
+            "&:hover": {
+              bgcolor: "#DBEAFE",
+            },
+          }}
+        >
+          <AddIcon />
+        </IconButton>
+      </Box>
+
+      <Button
+        variant="outlined"
+        color="error"
+        startIcon={<DeleteOutlineIcon />}
+        onClick={handleRemove}
+        sx={{
+          borderRadius: 3,
+          textTransform: "none",
+          fontWeight: 600,
+          px: 3,
+        }}
+      >
+        Remove Item
+      </Button>
+    </CardContent>
+
+    <Box
+      className="total-price"
+      sx={{
+        flexDirection: "column",
+      }}
+    >
+      <Typography
+        variant="body2"
+        color="text.secondary"
+      >
+        Total
+      </Typography>
+
+      <Typography
+        sx={{
+          fontWeight: 800,
+          fontSize: 28,
+          color: "#2563EB",
         }}
       >
         ₹{item.totalPrice}
-      </Box>
-    </Card>
-  );
+      </Typography>
+    </Box>
+  </Card>
+);
 }
 
 export default CartItem;

@@ -2,93 +2,55 @@ import {
   Card,
   CardContent,
   Typography,
-  Box,
+  Grid,
+  CardMedia,
   Button,
-  Avatar,
-  IconButton,
+  Box,
 } from "@mui/material";
 
-import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
-import {
-  removeFromWishlist,
-  fetchWishlist,
-} from "../../redux/slices/wishlistSlice";
-
-import toast from "react-hot-toast";
 
 import "./WishlistPreview.css";
 
 function WishlistPreview() {
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const { wishlist } = useSelector(
     (state) => state.wishlist
   );
 
-  const items = wishlist?.items?.slice(0, 4) || [];
-
-  const handleRemove = async (productId) => {
-
-    try {
-
-      await dispatch(removeFromWishlist(productId)).unwrap();
-      await dispatch(fetchWishlist());
-
-      toast.success("Removed from wishlist");
-
-    } catch (err) {
-
-      toast.error(err);
-
-    }
-
-  };
+  const items =
+    wishlist?.items?.slice(0, 4) || [];
 
   return (
 
-    <Card className="wishlist-preview-card">
+    <Card className="wishlist-card">
 
       <CardContent>
 
         <Box
           display="flex"
           justifyContent="space-between"
-          alignItems="center"
           mb={3}
         >
 
-          <Box
-            display="flex"
-            alignItems="center"
-            gap={1}
+          <Typography
+            variant="h5"
+            fontWeight={700}
           >
-
-            <FavoriteOutlinedIcon color="error"/>
-
-            <Typography
-              variant="h5"
-              fontWeight="bold"
-            >
-
-              Wishlist
-
-            </Typography>
-
-          </Box>
+            Wishlist
+          </Typography>
 
           <Button
-            onClick={() => navigate("/wishlist")}
+            onClick={() =>
+              navigate("/wishlist")
+            }
           >
-
             View All
-
           </Button>
 
         </Box>
@@ -96,85 +58,70 @@ function WishlistPreview() {
         {items.length === 0 ? (
 
           <Typography color="text.secondary">
-
             Wishlist is empty.
-
           </Typography>
 
         ) : (
 
-          items.map((item) => (
+          <Grid container spacing={3}>
 
-            <Box
-              key={item.productId}
-              className="wishlist-preview-item"
-            >
+            {items.map((item) => (
 
-              <Avatar
-                src={item.imageUrl}
-                variant="rounded"
-                sx={{
-                  width:70,
-                  height:70
-                }}
-              />
+              <Grid
+                item
+                xs={12}
+                sm={6}
+                md={3}
+                key={item.productId}
+              >
 
-              <Box flex={1}>
+                <Card className="wish-product">
 
-                <Typography
-                  fontWeight={600}
-                >
+                  <CardMedia
+                    component="img"
+                    height="170"
+                    image={item.imageUrl}
+                  />
 
-                  {item.productName}
+                  <CardContent>
 
-                </Typography>
+                    <Typography
+                      fontWeight={700}
+                      noWrap
+                    >
+                      {item.productName}
+                    </Typography>
 
-                <Typography color="primary">
+                    <Typography
+                      color="primary"
+                      fontWeight={700}
+                      mt={1}
+                    >
+                      ₹{item.price}
+                    </Typography>
 
-                  ₹{item.price}
+                    <Button
+                      fullWidth
+                      variant="contained"
+                      sx={{ mt: 2 }}
+                      onClick={() =>
+                        navigate(
+                          `/products/${item.productId}`
+                        )
+                      }
+                    >
+                      View Product
+                    </Button>
 
-                </Typography>
+                  </CardContent>
 
-                <Typography
-                  color="text.secondary"
-                  fontSize={14}
-                >
+                </Card>
 
-                  {item.brand}
+              </Grid>
 
-                </Typography>
+            ))}
 
-              </Box>
-
-              <Box>
-
-                <Button
-                  size="small"
-                  onClick={() =>
-                    navigate(`/products/${item.productId}`)
-                  }
-                >
-
-                  View
-
-                </Button>
-
-                <IconButton
-                  color="error"
-                  onClick={() =>
-                    handleRemove(item.productId)
-                  }
-                >
-
-                  <DeleteOutlineOutlinedIcon/>
-
-                </IconButton>
-
-              </Box>
-
-            </Box>
-
-          ))
+          </Grid>
 
         )}
 

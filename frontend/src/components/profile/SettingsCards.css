@@ -1,24 +1,27 @@
 .settings-card{
-    border-radius:18px;
-    cursor:pointer;
-    transition:.35s;
-    text-align:center;
-    height:100%;
-    box-shadow:0 8px 25px rgba(0,0,0,.08);
+
+margin-top:35px;
+
+border-radius:22px !important;
+
+box-shadow:0 10px 30px rgba(0,0,0,.06)!important;
+
 }
 
-.settings-card:hover{
-    transform:translateY(-8px);
-    box-shadow:0 15px 35px rgba(0,0,0,.18);
+.setting-item{
+
+padding:18px !important;
+
+border-radius:14px;
+
+transition:.3s;
+
 }
 
-.settings-icon{
-    width:70px;
-    height:70px;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:white;
-    margin:auto;
+.setting-item:hover{
+
+background:#f8fafc;
+
+transform:translateX(6px);
+
 }

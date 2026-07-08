@@ -3,12 +3,13 @@ import {
   CardContent,
   Typography,
   Box,
-  Divider,
   Button,
   Avatar,
+  Divider,
 } from "@mui/material";
 
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -40,24 +41,15 @@ function RecentOrders() {
           mb={3}
         >
 
-          <Box
-            display="flex"
-            alignItems="center"
-            gap={1}
+          <Typography
+            variant="h5"
+            fontWeight={700}
           >
-
-            <ShoppingBagOutlinedIcon color="primary" />
-
-            <Typography
-              variant="h5"
-              fontWeight="bold"
-            >
-              Recent Orders
-            </Typography>
-
-          </Box>
+            Recent Orders
+          </Typography>
 
           <Button
+            endIcon={<ArrowForwardIcon />}
             onClick={() => navigate("/orders")}
           >
             View All
@@ -68,75 +60,66 @@ function RecentOrders() {
         {recentOrders.length === 0 ? (
 
           <Typography color="text.secondary">
-
-            No orders yet.
-
+            No orders found.
           </Typography>
 
         ) : (
 
           recentOrders.map((order) => (
 
-            <Box
-              key={order.orderId}
-              className="recent-order"
-            >
+            <Box key={order.orderId}>
 
-              <Avatar
-                src={
-                  order.items?.[0]?.imageUrl ||
-                  "https://via.placeholder.com/80"
-                }
-                variant="rounded"
-                sx={{
-                  width: 70,
-                  height: 70,
-                }}
-              />
+              <Box className="order-item">
 
-              <Box flex={1}>
-
-                <Typography fontWeight={700}>
-
-                  Order #{order.orderId}
-
-                </Typography>
-
-                <Typography
-                  color="text.secondary"
-                  fontSize={14}
-                >
-
-                  {new Date(
-                    order.orderedAt
-                  ).toLocaleDateString()}
-
-                </Typography>
-
-                <Typography>
-
-                  {order.items.length} item(s)
-
-                </Typography>
-
-              </Box>
-
-              <Box textAlign="right">
-
-                <OrderStatusChip
-                  status={order.status}
+                <Avatar
+                  src={
+                    order.items?.[0]?.imageUrl ||
+                    "https://via.placeholder.com/90"
+                  }
+                  variant="rounded"
+                  sx={{
+                    width: 90,
+                    height: 90,
+                    borderRadius: 3,
+                  }}
                 />
 
-                <Typography
-                  mt={1}
-                  fontWeight={700}
-                >
+                <Box flex={1}>
 
-                  ₹{order.totalAmount}
+                  <Typography fontWeight={700}>
+                    Order #{order.orderId}
+                  </Typography>
 
-                </Typography>
+                  <Typography color="text.secondary">
+                    {new Date(
+                      order.orderedAt
+                    ).toLocaleDateString()}
+                  </Typography>
+
+                  <Typography mt={1}>
+                    {order.items.length} Items
+                  </Typography>
+
+                </Box>
+
+                <Box textAlign="right">
+
+                  <OrderStatusChip
+                    status={order.status}
+                  />
+
+                  <Typography
+                    mt={1}
+                    fontWeight={700}
+                  >
+                    ₹{order.totalAmount}
+                  </Typography>
+
+                </Box>
 
               </Box>
+
+              <Divider />
 
             </Box>
 

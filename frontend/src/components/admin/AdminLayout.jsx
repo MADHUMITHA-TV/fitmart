@@ -11,9 +11,9 @@ export default function AdminLayout() {
       <div className="admin-main">
         <Topbar />
 
-        <div className="admin-content">
+        <main className="admin-content">
           <Outlet />
-        </div>
+        </main>
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import {
+  Grid,
   Card,
   CardContent,
-  Grid,
   Typography,
   Box,
 } from "@mui/material";
@@ -21,77 +21,72 @@ function StatsCards() {
   const { wishlist } = useSelector((state) => state.wishlist);
   const { cart } = useSelector((state) => state.cart);
 
-  const totalOrders = orders?.length || 0;
-  const wishlistItems = wishlist?.items?.length || 0;
-  const cartItems = cart?.totalItems || 0;
-
-  const totalSpent =
-    orders?.reduce(
-      (sum, order) => sum + (order.totalAmount || 0),
-      0
-    ) || 0;
-
   const stats = [
     {
       title: "Orders",
-      value: totalOrders,
-      icon: <ShoppingBagOutlinedIcon fontSize="large" />,
-      color: "#1976d2",
+      value: orders?.length || 0,
+      icon: <ShoppingBagOutlinedIcon />,
+      color: "#2563eb",
     },
     {
       title: "Wishlist",
-      value: wishlistItems,
-      icon: <FavoriteBorderOutlinedIcon fontSize="large" />,
-      color: "#e91e63",
+      value: wishlist?.items?.length || 0,
+      icon: <FavoriteBorderOutlinedIcon />,
+      color: "#ec4899",
     },
     {
       title: "Cart",
-      value: cartItems,
-      icon: <ShoppingCartOutlinedIcon fontSize="large" />,
-      color: "#2e7d32",
+      value: cart?.totalItems || 0,
+      icon: <ShoppingCartOutlinedIcon />,
+      color: "#10b981",
     },
     {
-      title: "Total Spent",
-      value: `₹${totalSpent.toLocaleString()}`,
-      icon: <CurrencyRupeeOutlinedIcon fontSize="large" />,
-      color: "#ef6c00",
+      title: "Spent",
+      value:
+        "₹" +
+        (
+          orders?.reduce(
+            (sum, order) =>
+              sum + order.totalAmount,
+            0
+          ) || 0
+        ).toLocaleString(),
+      icon: <CurrencyRupeeOutlinedIcon />,
+      color: "#f59e0b",
     },
   ];
 
   return (
-    <Grid container spacing={3} sx={{ mb: 5 }}>
-      {stats.map((stat) => (
-        <Grid item xs={12} sm={6} md={3} key={stat.title}>
-
+    <Grid container spacing={3} sx={{mt: 5,
+    mb: 4,}}>
+      {stats.map((item) => (
+        <Grid item xs={12} sm={6} md={3} key={item.title}>
           <Card className="stats-card">
-
             <CardContent>
 
               <Box
                 className="stats-icon"
                 sx={{
-                  background: stat.color,
+                  background: item.color,
                 }}
               >
-                {stat.icon}
+                {item.icon}
               </Box>
 
               <Typography
                 variant="h4"
-                fontWeight="bold"
+                fontWeight={700}
                 mt={2}
               >
-                {stat.value}
+                {item.value}
               </Typography>
 
               <Typography color="text.secondary">
-                {stat.title}
+                {item.title}
               </Typography>
 
             </CardContent>
-
           </Card>
-
         </Grid>
       ))}
     </Grid>

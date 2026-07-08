@@ -5,336 +5,274 @@ import {
   Grid,
   Card,
   CardContent,
-  Avatar,
   Button,
 } from "@mui/material";
 
-import LocalShippingIcon from "@mui/icons-material/LocalShipping";
-import SecurityIcon from "@mui/icons-material/Security";
+import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import VerifiedIcon from "@mui/icons-material/Verified";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import SupportAgentIcon from "@mui/icons-material/SupportAgent";
 
-import GroupsIcon from "@mui/icons-material/Groups";
-import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
-import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+
+import heroImage from "../../assets/about.jpg";
 
 import "./About.css";
 
 function About() {
+  const navigate = useNavigate();
+
+  const features = [
+    {
+      icon: <FitnessCenterIcon sx={{ fontSize: 45 }} />,
+      title: "Premium Fitness Gear",
+      description:
+        "High-quality gym equipment, activewear and accessories for every fitness goal.",
+    },
+    {
+      icon: <VerifiedIcon sx={{ fontSize: 45 }} />,
+      title: "Authentic Supplements",
+      description:
+        "Shop trusted nutrition products from top fitness brands with complete confidence.",
+    },
+    {
+      icon: <LocalShippingIcon sx={{ fontSize: 45 }} />,
+      title: "Fast Delivery",
+      description:
+        "Quick and reliable shipping across India with secure packaging.",
+    },
+    {
+      icon: <SupportAgentIcon sx={{ fontSize: 45 }} />,
+      title: "24/7 Support",
+      description:
+        "Our support team is always ready to help you with your orders.",
+    },
+  ];
+
   return (
     <Box className="about-page">
 
-      {/* Hero */}
+      {/* HERO */}
 
-      <Box className="about-hero">
+      <Container maxWidth="xl">
 
-        <Container>
+        <Grid
+          container
+          spacing={6}
+          alignItems="center"
+          className="about-hero"
+        >
+
+          <Grid item xs={12} md={6}>
+
+            <motion.div
+              initial={{ opacity: 0, x: -40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.7 }}
+            >
+
+              <Typography className="about-tag">
+                ABOUT FITMART
+              </Typography>
+
+              <Typography
+                variant="h2"
+                className="about-title"
+              >
+                Your Trusted
+                <br />
+                Fitness Partner
+              </Typography>
+
+              <Typography className="about-subtitle">
+
+                FitMart helps athletes and fitness
+                enthusiasts achieve their goals with
+                premium gym equipment, supplements,
+                activewear and accessories.
+
+              </Typography>
+
+              <Button
+                variant="contained"
+                size="large"
+                className="shop-btn"
+                onClick={() => navigate("/products")}
+              >
+                Shop Now
+              </Button>
+
+            </motion.div>
+
+          </Grid>
+
+         
+
+        </Grid>
+
+      </Container>
+
+      {/* MISSION */}
+
+      <Box className="mission-section">
+
+        <Container maxWidth="md">
 
           <Typography
-            variant="h2"
-            className="hero-title"
+            variant="h3"
+            align="center"
+            className="section-title"
           >
-            About FitMart
+            Our Mission
           </Typography>
 
           <Typography
-            variant="h6"
-            className="hero-subtitle"
+            className="mission-text"
+            align="center"
           >
-            India's trusted online shopping destination for
-            quality products, amazing deals and fast delivery.
+            Our mission is simple — to provide premium
+            fitness products that inspire healthier
+            lifestyles. Whether you're starting your
+            fitness journey or training professionally,
+            FitMart offers reliable products to help
+            you perform your best every day.
           </Typography>
 
         </Container>
 
       </Box>
 
-      {/* Story */}
+      {/* FEATURES */}
 
-      <Container sx={{ py: 10 }}>
+     {/* WHY CHOOSE */}
 
-        <Grid container spacing={6} alignItems="center">
+<Box className="why-fitmart">
 
-          <Grid item xs={12} md={6}>
+  <Container maxWidth="xl">
 
-            <img
-              src="https://images.unsplash.com/photo-1556740749-887f6717d7e4"
-              alt="shopping"
-              className="about-image"
-            />
+    <Typography
+      variant="h3"
+      align="center"
+      className="section-title"
+    >
 
-          </Grid>
+      Why Thousands
+      <br />
 
-          <Grid item xs={12} md={6}>
+      Choose FitMart
+
+    </Typography>
+
+    
+
+    <Grid
+      container
+      spacing={4}
+      mt={5}
+    >
+
+      {[
+        {
+          icon: "🏋️",
+          title: "Premium Equipment",
+          desc: "Professional gym equipment built for durability."
+        },
+
+        {
+          icon: "🥤",
+          title: "Authentic Supplements",
+          desc: "100% genuine nutrition products from trusted brands."
+        },
+
+        {
+          icon: "👕",
+          title: "Activewear",
+          desc: "Comfortable apparel designed for every workout."
+        },
+
+     
+
+      ].map((item)=>(
+
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          md={3}
+          key={item.title}
+        >
+
+          <Box className="why-card">
+
+            <Box className="why-icon">
+
+              {item.icon}
+
+            </Box>
 
             <Typography
-              variant="h3"
-              fontWeight="bold"
-              gutterBottom
+              variant="h6"
+              mt={3}
+              fontWeight={700}
             >
-              Our Story
-            </Typography>
 
-            <Typography className="story-text">
-
-              FitMart was created with one simple vision —
-              making online shopping easier, faster and more
-              enjoyable.
-
-              <br /><br />
-
-              We provide thousands of premium products
-              across electronics, fashion, home appliances,
-              groceries, sports and much more.
-
-              <br /><br />
-
-              Every order is backed by secure payments,
-              fast delivery and trusted customer support.
+              {item.title}
 
             </Typography>
 
-          </Grid>
+            <Typography
+              color="text.secondary"
+              mt={2}
+            >
+
+              {item.desc}
+
+            </Typography>
+
+          </Box>
 
         </Grid>
 
-      </Container>
+      ))}
 
-      {/* Why Choose */}
+    </Grid>
 
-      <Box className="why-section">
+  </Container>
 
-        <Container>
+</Box>
 
-          <Typography
-            variant="h3"
-            align="center"
-            fontWeight="bold"
-            mb={6}
-          >
-            Why Choose FitMart?
-          </Typography>
-
-          <Grid container spacing={4}>
-
-            <Grid item xs={12} sm={6} md={3}>
-              <Card className="feature-card">
-                <CardContent>
-
-                  <LocalShippingIcon
-                    sx={{ fontSize: 55 }}
-                    color="primary"
-                  />
-
-                  <Typography variant="h6" mt={2}>
-                    Fast Delivery
-                  </Typography>
-
-                  <Typography color="text.secondary">
-                    Quick delivery across India.
-                  </Typography>
-
-                </CardContent>
-              </Card>
-            </Grid>
-
-            <Grid item xs={12} sm={6} md={3}>
-              <Card className="feature-card">
-                <CardContent>
-
-                  <SecurityIcon
-                    sx={{ fontSize: 55 }}
-                    color="primary"
-                  />
-
-                  <Typography variant="h6" mt={2}>
-                    Secure Payments
-                  </Typography>
-
-                  <Typography color="text.secondary">
-                    100% encrypted payment gateway.
-                  </Typography>
-
-                </CardContent>
-              </Card>
-            </Grid>
-
-            <Grid item xs={12} sm={6} md={3}>
-              <Card className="feature-card">
-                <CardContent>
-
-                  <VerifiedIcon
-                    sx={{ fontSize: 55 }}
-                    color="primary"
-                  />
-
-                  <Typography variant="h6" mt={2}>
-                    Genuine Products
-                  </Typography>
-
-                  <Typography color="text.secondary">
-                    Only trusted brands and sellers.
-                  </Typography>
-
-                </CardContent>
-              </Card>
-            </Grid>
-
-            <Grid item xs={12} sm={6} md={3}>
-              <Card className="feature-card">
-                <CardContent>
-
-                  <SupportAgentIcon
-                    sx={{ fontSize: 55 }}
-                    color="primary"
-                  />
-
-                  <Typography variant="h6" mt={2}>
-                    24×7 Support
-                  </Typography>
-
-                  <Typography color="text.secondary">
-                    Friendly customer assistance.
-                  </Typography>
-
-                </CardContent>
-              </Card>
-            </Grid>
-
-          </Grid>
-
-        </Container>
-
-      </Box>
-
-      {/* Statistics */}
-
-      <Container sx={{ py: 10 }}>
-
-        <Grid container spacing={4}>
-
-          <Grid item xs={6} md={3}>
-            <Box className="stat-box">
-              <ShoppingBagIcon color="primary" sx={{ fontSize: 45 }} />
-              <Typography variant="h3">15K+</Typography>
-              <Typography>Products</Typography>
-            </Box>
-          </Grid>
-
-          <Grid item xs={6} md={3}>
-            <Box className="stat-box">
-              <GroupsIcon color="primary" sx={{ fontSize: 45 }} />
-              <Typography variant="h3">50K+</Typography>
-              <Typography>Customers</Typography>
-            </Box>
-          </Grid>
-
-          <Grid item xs={6} md={3}>
-            <Box className="stat-box">
-              <EmojiEventsIcon color="primary" sx={{ fontSize: 45 }} />
-              <Typography variant="h3">99%</Typography>
-              <Typography>Satisfaction</Typography>
-            </Box>
-          </Grid>
-
-          <Grid item xs={6} md={3}>
-            <Box className="stat-box">
-              <LocalShippingIcon color="primary" sx={{ fontSize: 45 }} />
-              <Typography variant="h3">24 hrs</Typography>
-              <Typography>Fast Delivery</Typography>
-            </Box>
-          </Grid>
-
-        </Grid>
-
-      </Container>
-
-      {/* Team */}
-
-      <Box className="team-section">
-
-        <Container>
-
-          <Typography
-            variant="h3"
-            align="center"
-            fontWeight="bold"
-            mb={6}
-          >
-            Meet Our Team
-          </Typography>
-
-          <Grid container spacing={4}>
-
-            {[
-              "John",
-              "Sophia",
-              "Emma",
-              "David",
-            ].map((member) => (
-
-              <Grid item xs={12} sm={6} md={3} key={member}>
-
-                <Card className="team-card">
-
-                  <CardContent>
-
-                    <Avatar
-                      sx={{
-                        width: 90,
-                        height: 90,
-                        margin: "auto",
-                      }}
-                    />
-
-                    <Typography
-                      variant="h6"
-                      mt={2}
-                    >
-                      {member}
-                    </Typography>
-
-                    <Typography color="text.secondary">
-                      Software Engineer
-                    </Typography>
-
-                  </CardContent>
-
-                </Card>
-
-              </Grid>
-
-            ))}
-
-          </Grid>
-
-        </Container>
-
-      </Box>
+      
 
       {/* CTA */}
 
-      <Box className="cta-section">
+      <Box className="about-cta">
 
         <Container>
 
           <Typography
             variant="h3"
-            fontWeight="bold"
+            fontWeight={700}
           >
-            Start Shopping Today
+            Ready to Start Your Fitness Journey?
           </Typography>
 
-          <Typography sx={{ mt: 2, mb: 4 }}>
-            Discover thousands of premium products.
+          <Typography
+            sx={{
+              mt: 2,
+              mb: 4,
+            }}
+          >
+            Discover premium fitness products
+            carefully selected for your goals.
           </Typography>
 
           <Button
             variant="contained"
             size="large"
-            href="/products"
+            onClick={() => navigate("/products")}
           >
-            Shop Now
+            Explore Products
           </Button>
 
         </Container>
